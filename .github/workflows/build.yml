@@ -28,9 +28,9 @@ jobs:
         cmake .
         make && ls
 
-    - name: Build recdvd
+    - name: Build recdvb
       run: |
-        cd lib/recdvd && pwd
+        cd lib/recdvb && pwd
         ./autogen.sh
         ./configure --enable-b25
         make && ls
