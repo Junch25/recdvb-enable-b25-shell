@@ -19,16 +19,16 @@ jobs:
       with:
         submodules: true 
 
-    - name: Install dependencies
+    - name: Build dependencies
       run: sudo apt-get update && sudo apt-get install -y cmake g++ gcc make build-essential autoconf automake libpcsclite-dev pcscd pcsc-tools libccid pkg-config
 
-    - name: Install libarib25
+    - name: Build libarib25
       run: |
         cd lib/libarib25 && pwd
         cmake .
         make && ls
 
-    - name: Install recdvd
+    - name: Build recdvd
       run: |
         cd lib/recdvd && pwd
         ./autogen.sh
