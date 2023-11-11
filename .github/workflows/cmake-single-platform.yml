@@ -22,17 +22,16 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get update && sudo apt-get install -y cmake g++ gcc make build-essential autoconf automake libpcsclite-dev pcscd pcsc-tools libccid pkg-config
 
-    - name: Setup libarib25 and recdvb environment
-      run: mkdir -p ${{env.WORKDIR}}
-
     - name: Install libarib25
       run: |
+        pwd
         cd libarib25
         cmake .
         make
 
     - name: Install recdvb
       run: |
+        pwd
         cd ../recdvb
         ./autogen.sh
         ./configure --enable-b25
