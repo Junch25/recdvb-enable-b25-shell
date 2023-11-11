@@ -33,7 +33,7 @@ jobs:
 
     - name: Install recdvb
       run: |
-        cd recdvb
+        cd ../recdvb
         ./autogen.sh
         ./configure --enable-b25
         make
