@@ -1,6 +1,1 @@
-[submodule "libarib25"]
-	path = libarib25
-	url = https://github.com/stz2012/libarib25
-[submodule "recdvd"]
-	path = recdvd
-	url = https://github.com/dogeel/recdvb.git
+
