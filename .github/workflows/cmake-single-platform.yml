@@ -25,14 +25,14 @@ jobs:
     - name: Install libarib25
       run: |
         pwd
-        cd libarib25
+        cd libarib25 && pwd
         cmake .
         make
 
-    - name: Install recdvb
+    - name: Install recdvd
       run: |
         pwd
-        cd ../recdvb
+        cd recdvd && pwd
         ./autogen.sh
         ./configure --enable-b25
         make
