@@ -1,7 +1,0 @@
-
-[submodule "lib/libarib25"]
-	path = lib/libarib25
-	url = https://github.com/Junch25/libarib25.git
-[submodule "lib/recdvb"]
-	path = lib/recdvb
-	url = https://github.com/Junch25/recdvb.git
