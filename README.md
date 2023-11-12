@@ -1,2 +1,2 @@
-# recdvd-enable-b25-shell
-recdvd cmd --enable-b25 shellscript
+# recdvb-enable-b25-shell
+recdvb cmd --enable-b25 shellscript
