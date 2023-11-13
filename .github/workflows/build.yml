@@ -38,7 +38,7 @@ jobs:
         run: |
           git submodule init && git submodule update
           cd lib/libaribb25
-          cmake -B build && cd build
+          cmake -B build && cd build && ls -laR
           make && sudo make install && echo "done!"
 
       - name: Build recdvb (Ubuntu)
@@ -48,12 +48,12 @@ jobs:
           git submodule init && git submodule update
           ./autogen.sh
           ./configure --enable-b25
-          make && sudo make install && echo "done!"
+          make && & ls -laR && sudo make install && echo "done!"
 
       - name: Build libarib25 (macOS)
         if: matrix.os == 'macos-latest'
         run: |
           cd lib/libaribb25
-          cmake -B build && cd build
+          cmake -B build && cd build && ls -laR
           make && echo "done!"
 
