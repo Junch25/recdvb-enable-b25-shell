@@ -48,7 +48,7 @@ jobs:
           git submodule init && git submodule update
           ./autogen.sh
           ./configure --enable-b25
-          make && & ls -laR && sudo make install && echo "done!"
+          make && ls -laR && sudo make install && echo "done!"
 
       - name: Build libarib25 (macOS)
         if: matrix.os == 'macos-latest'
