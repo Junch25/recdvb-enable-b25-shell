@@ -20,17 +20,19 @@ jobs:
         submodules: true 
 
     - name: Build dependencies
-      run: sudo apt-get update && sudo apt-get install -y cmake g++ gcc make build-essential autoconf automake libpcsclite-dev pcscd pcsc-tools libccid pkg-config
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake g++ gcc make build-essential autoconf automake libpcsclite-dev pcscd pcsc-tools libccid pkg-config
 
     - name: Build libarib25
       run: |
         git submodule init && git submodule update
         cd lib/libaribb25
         cmake .
-        make && make install && echo "done!"
+        make && sudo make install && echo "done!"
 
     - name: Build recdvb
       run: |
         cd lib/recdvb
         git submodule init && git submodule update
-        make && make install && echo "done!"
+        make && sudo make install && echo "done!"
