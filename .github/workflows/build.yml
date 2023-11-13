@@ -62,8 +62,8 @@ jobs:
           cd lib/libaribb25
           cmake -B build && cd build
           make
-          mkdir -p $WORKDIR/bin_macOS/libaribb25
-          cp arib-b1-stream-test arib-b25-stream-test b1 b25 $WORKDIR/bin_macOS/libaribb25/
+          mkdir -p $WORKDIR/bin_macos/libaribb25
+          cp arib-b1-stream-test arib-b25-stream-test b1 b25 $WORKDIR/bin_macos/libaribb25/
           echo "done!"
 
       - name: Archive libaribb25 (Ubuntu)
