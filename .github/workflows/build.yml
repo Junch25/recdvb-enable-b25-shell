@@ -24,8 +24,12 @@ jobs:
 
     - name: Build libarib25
       run: |
-        bash $WORKDIR/shell/libarib25_install.sh
+        cd $WORKDIR/
+        git submodule init && git submodule update
+        bash shell/libarib25_install.sh
 
     - name: Build recdvb
       run: |
-        bash $WORKDIR/shell/libarib25_install.sh
+        cd $WORKDIR/
+        git submodule init && git submodule update
+        bash shell/libarib25_install.sh
