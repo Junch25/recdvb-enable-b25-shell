@@ -38,8 +38,11 @@ jobs:
         run: |
           git submodule init && git submodule update
           cd lib/libaribb25
-          cmake -B build && cd build && ls -laR
-          make && ls -laR && sudo make install && echo "done!"
+          cmake -B build && cd build
+          make && sudo make install
+          mkdir -p bin
+          cp arib-b1-stream-test arib-b25-stream-test b1 b25 bin/ && ls -la
+          echo "done!"
 
       - name: Build recdvb (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
@@ -48,12 +51,18 @@ jobs:
           git submodule init && git submodule update
           ./autogen.sh
           ./configure --enable-b25
-          make && ls -laR && sudo make install && echo "done!"
+          make && sudo make install
+          mkdir -p bin
+          cp recdvb recpt1ctl chkdvbsignal tssplitter_lite bin/ && ls -la
+          echo "done!"
 
       - name: Build libarib25 (macOS)
         if: matrix.os == 'macos-latest'
         run: |
           cd lib/libaribb25
-          cmake -B build && cd build && ls -laR
-          make && ls -laR && echo "done!"
+          cmake -B build && cd build
+          make
+          mkdir -p bin
+          cp arib-b1-stream-test arib-b25-stream-test b1 b25 bin/ && ls -la
+          echo "done!"
 
