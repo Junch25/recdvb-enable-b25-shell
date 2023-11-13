@@ -1,4 +1,4 @@
-name: CMake with libarib25 and recdvb
+name: build with libarib25 and recdvb
 
 on:
   push:
@@ -25,9 +25,10 @@ jobs:
     - name: Build libarib25
       run: |
         git submodule init && git submodule update
-        bash shell/libarib25_install.sh
+        cmake .
+        make && make install && echo "done!"
 
     - name: Build recdvb
       run: |
         git submodule init && git submodule update
-        bash shell/libarib25_install.sh
+        make && make install && echo "done!"
