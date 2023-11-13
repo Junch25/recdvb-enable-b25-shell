@@ -40,8 +40,8 @@ jobs:
           cd lib/libaribb25
           cmake -B build && cd build
           make && sudo make install
-          mkdir -p bin
-          cp arib-b1-stream-test arib-b25-stream-test b1 b25 bin/ && ls -la
+          mkdir -p bin_ubuntu
+          cp arib-b1-stream-test arib-b25-stream-test b1 b25 bin_ubuntu/ && ls -la bin_ubuntu
           echo "done!"
 
       - name: Build recdvb (Ubuntu)
@@ -52,8 +52,8 @@ jobs:
           ./autogen.sh
           ./configure --enable-b25
           make && sudo make install
-          mkdir -p bin
-          cp recdvb recpt1ctl chkdvbsignal tssplitter_lite bin/ && ls -la
+          mkdir -p bin_ubuntu
+          cp recdvb recpt1ctl chkdvbsignal tssplitter_lite bin_ubuntu/ && ls -la bin_ubuntu
           echo "done!"
 
       - name: Build libarib25 (macOS)
@@ -62,7 +62,7 @@ jobs:
           cd lib/libaribb25
           cmake -B build && cd build
           make
-          mkdir -p bin
-          cp arib-b1-stream-test arib-b25-stream-test b1 b25 bin/ && ls -la
+          mkdir -p bin_macOS
+          cp arib-b1-stream-test arib-b25-stream-test b1 b25 bin_macOS/ && ls -la bin_macOS
           echo "done!"
 
