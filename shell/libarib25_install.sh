@@ -2,7 +2,7 @@
 
 set -e
 
-cd ~/recdvb-enable-b25-shell/lib/libarib25
+cd ~/recdvb-enable-b25-shell/lib/libaribb25
 cmake .
 make
 make install
