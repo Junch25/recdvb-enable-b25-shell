@@ -1,6 +1,6 @@
-[submodule "lib/recdvb"]
-	path = lib/recdvb
-	url = https://github.com/Junch25/recdvb.git
 [submodule "lib/libaribb25"]
 	path = lib/libaribb25
 	url = https://github.com/Junch25/libaribb25.git
+[submodule "lib/recdvb"]
+	path = lib/recdvb
+	url = https://github.com/Junch25/recdvb.git
