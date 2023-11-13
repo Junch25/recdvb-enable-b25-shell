@@ -73,7 +73,7 @@ jobs:
 
       - name: Upload libaribb25 Artifact (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: libaribb25_ubuntu
           path: libaribb25_ubuntu.tar.gz
@@ -85,7 +85,7 @@ jobs:
 
       - name: Upload recdvb Artifact (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: recdvb_ubuntu
           path: recdvb_ubuntu.tar.gz
@@ -97,7 +97,7 @@ jobs:
 
       - name: Upload libaribb25 Artifact (macOS)
         if: matrix.os == 'macos-latest'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: libaribb25_macos
           path: libaribb25_macos.tar.gz
