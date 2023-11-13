@@ -25,10 +25,12 @@ jobs:
     - name: Build libarib25
       run: |
         git submodule init && git submodule update
+        cd lib/libaribb25
         cmake .
         make && make install && echo "done!"
 
     - name: Build recdvb
       run: |
+        cd lib/recdvb
         git submodule init && git submodule update
         make && make install && echo "done!"
