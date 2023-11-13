@@ -1,4 +1,4 @@
-name: build with libarib25 and recdvb
+name: Multi-Platform Build with libarib25 and recdvb
 
 on:
   push:
@@ -12,29 +12,59 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: true 
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
 
-    - name: Build dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y cmake g++ gcc make build-essential autoconf automake libpcsclite-dev pcscd pcsc-tools libccid pkg-config
+      - name: Install dependencies (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ gcc make build-essential autoconf automake libpcsclite-dev pcscd pcsc-tools libccid pkg-config
 
-    - name: Build libarib25
-      run: |
-        git submodule init && git submodule update
-        cd lib/libaribb25
-        cmake .
-        make && sudo make install && echo "done!"
+      - name: Install dependencies (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install cmake gcc make autoconf automake pkg-config pcsc-lite
 
-    - name: Build recdvb
-      run: |
-        cd lib/recdvb
-        git submodule init && git submodule update
-        ./autogen.sh
-        ./configure --enable-b25
-        make && sudo make install && echo "done!"
+      - name: Install dependencies (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          choco install cmake make autoconf automake pkgconfig.portable -y
+
+      - name: Build libarib25 (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          git submodule init && git submodule update
+          cd lib/libaribb25
+          cmake -B build && cd build
+          make && sudo make install && echo "done!"
+
+      - name: Build recdvb (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          cd lib/recdvb
+          git submodule init && git submodule update
+          ./autogen.sh
+          ./configure --enable-b25
+          make && sudo make install && echo "done!"
+
+      - name: Build libarib25 (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          cd lib/libaribb25
+          cmake -B build && cd build
+          make && echo "done!"
+
+      - name: Build libarib25 (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          cd lib\libaribb25
+          cmake -G "Visual Studio 16 2019" -A x64 .
+          cmake --build build --config Release
