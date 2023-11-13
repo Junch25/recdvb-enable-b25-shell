@@ -24,13 +24,8 @@ jobs:
 
     - name: Build libarib25
       run: |
-        cd lib/libarib25 && pwd
-        cmake .
-        make && ls
+        bash $WORKDIR/shell/libarib25_install.sh
 
     - name: Build recdvb
       run: |
-        cd lib/recdvb && pwd
-        ./autogen.sh
-        ./configure --enable-b25
-        make && ls
+        bash $WORKDIR/shell/libarib25_install.sh
