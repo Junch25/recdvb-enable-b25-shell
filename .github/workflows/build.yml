@@ -91,13 +91,15 @@ jobs:
           name: recdvb_${{ matrix.os }}
           path: recdvb_${{ matrix.os }}.tar.gz
 
-      # Generate and push a new tag (only for Ubuntu)
+      # Generate and push a new tag
       - name: Generate tag
         if: github.ref == 'refs/heads/main'
+        env:
+         OSTAG: ${{ matrix.os }} 
         run: |
           TAG_DATE=$(date +'%Y%m%d')
           SHORT_SHA=$(git rev-parse --short HEAD)
-          TAG_NAME="v${TAG_DATE}-${SHORT_SHA}"
+          TAG_NAME="v${TAG_DATE}-${SHORT_SHA}-${OSTAG}"
           echo "TAG_NAME=${TAG_NAME}" >> $GITHUB_ENV
           git tag $TAG_NAME
           git push origin $TAG_NAME
