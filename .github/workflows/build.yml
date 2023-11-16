@@ -108,7 +108,7 @@ jobs:
 
       # Generate and push a new tag (only once)
       - name: Generate tag
-        if: github.ref == 'refs/heads/main' && matrix.os == 'ubuntu-latest'
+        if: github.ref == 'refs/heads/main'
         run: |
           TAG_DATE=$(date +'%Y%m%d')
           SHORT_SHA=$(git rev-parse --short HEAD)
@@ -148,6 +148,7 @@ jobs:
 
       # Download artifacts and upload to release
       - name: Download artifacts for recdvb
+        if: matrix.os == 'ubuntu-latest'
         uses: actions/download-artifact@v2
         with:
           name: recdvb_${{ matrix.os }}
