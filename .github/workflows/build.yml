@@ -152,7 +152,7 @@ jobs:
         with:
           name: recdvb_${{ matrix.os }}
       - name: Upload release asset for recdvb
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && matrix.os == 'ubuntu-latest'
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
