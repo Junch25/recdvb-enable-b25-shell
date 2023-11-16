@@ -93,7 +93,7 @@ jobs:
 
       # Generate and push a new tag (only for Ubuntu)
       - name: Generate tag
-        if: github.ref == 'refs/heads/main' && matrix.os == 'ubuntu-latest'
+        if: github.ref == 'refs/heads/main'
         run: |
           TAG_DATE=$(date +'%Y%m%d')
           SHORT_SHA=$(git rev-parse --short HEAD)
@@ -102,10 +102,10 @@ jobs:
           git tag $TAG_NAME
           git push origin $TAG_NAME
 
-      # Create a GitHub Release (only for Ubuntu)
+      # Create a GitHub Release
       - name: Create Release
         id: create_release
-        if: github.ref == 'refs/heads/main' && matrix.os == 'ubuntu-latest'
+        if: github.ref == 'refs/heads/main'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
