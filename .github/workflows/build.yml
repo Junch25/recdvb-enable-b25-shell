@@ -86,7 +86,7 @@ jobs:
       - name: Archive recdvb (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         run: |
-          tar -czvf recdvb_ubuntu.tar.gz $WORKDIR/recdvb_${{ matrix.os }}
+          tar -czvf recdvb_${{ matrix.os }}.tar.gz $WORKDIR/recdvb_${{ matrix.os }}
       - name: Upload recdvb Artifact (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v3
