@@ -106,25 +106,31 @@ jobs:
           name: libaribb25_macos
           path: libaribb25_macos.tar.gz
 
+      # Generate and push a new tag
+      - name: Generate tag
+        if: github.ref == 'refs/heads/main'
+        run: |
+          TAG_DATE=$(date +'%Y%m%d')
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          TAG_NAME="v${TAG_DATE}-${SHORT_SHA}-${{ matrix.os }}"
+          echo "TAG_NAME=${TAG_NAME}" >> $GITHUB_ENV
+          git tag $TAG_NAME
+          git push origin $TAG_NAME
+
       # Create a GitHub Release
       - name: Create Release
-        id: create_release
+        if: github.ref == 'refs/heads/main'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.tag.outputs.tag }}
-          release_name: Release ${{ steps.tag.outputs.tag }}
+          tag_name: ${{ env.TAG_NAME }}
+          release_name: Release ${{ env.TAG_NAME }} for ${{ matrix.os }}
           draft: false
           prerelease: false
 
-      # [Ubuntu] Download and upload libaribb25 to Release
-      - name: Download libaribb25 Artifact (Ubuntu)
-        if: matrix.os == 'ubuntu-latest'
-        uses: actions/download-artifact@v2
-        with:
-          name: libaribb25_ubuntu
-      - name: Upload libaribb25 to Release (Ubuntu)
+      # Upload release asset
+      - name: Upload release asset
         if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-release-asset@v1
         env:
@@ -135,30 +141,7 @@ jobs:
           asset_name: libaribb25_ubuntu.tar.gz
           asset_content_type: application/gzip
 
-      # [Ubuntu] Download and upload recdvb to Release
-      - name: Download recdvb Artifact (Ubuntu)
-        if: matrix.os == 'ubuntu-latest'
-        uses: actions/download-artifact@v2
-        with:
-          name: recdvb_ubuntu
-      - name: Upload recdvb to Release (Ubuntu)
-        if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./recdvb_ubuntu.tar.gz
-          asset_name: recdvb_ubuntu.tar.gz
-          asset_content_type: application/gzip
-
-      # [macOS] Download and upload libaribb25 to Release
-      - name: Download libaribb25 Artifact (macOS)
-        if: matrix.os == 'macos-latest'
-        uses: actions/download-artifact@v2
-        with:
-          name: libaribb25_macos
-      - name: Upload libaribb25 to Release (macOS)
+      - name: Upload release asset
         if: matrix.os == 'macos-latest'
         uses: actions/upload-release-asset@v1
         env:
