@@ -133,6 +133,7 @@ jobs:
 
       # Download and upload recdvb artifact (for both Ubuntu and macOS)
       - name: Download artifacts for recdvb
+        if: matrix.os == 'ubuntu-latest'
         uses: actions/download-artifact@v2
         with:
           name: recdvb_${{ matrix.os }}
