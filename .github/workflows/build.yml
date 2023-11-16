@@ -1,4 +1,4 @@
-name: Multi-Platform Build with libarib25 and recdvb
+name: Multi-Platform Build with libaribb25 and recdvb
 
 on:
   push:
