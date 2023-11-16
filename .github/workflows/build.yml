@@ -86,7 +86,7 @@ jobs:
       - name: Archive recdvb (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         run: |
-          tar -czvf recdvb_ubuntu.tar.gz $WORKDIR/recdvb_${{ matrix.os }}
+          tar -czvf recdvb_${{ matrix.os }}.tar.gz $WORKDIR/recdvb_${{ matrix.os }}
       - name: Upload recdvb Artifact (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v3
@@ -108,7 +108,7 @@ jobs:
 
       # Generate and push a new tag (only once)
       - name: Generate tag
-        if: github.ref == 'refs/heads/main' && matrix.os == 'ubuntu-latest'
+        if: github.ref == 'refs/heads/main'
         run: |
           TAG_DATE=$(date +'%Y%m%d')
           SHORT_SHA=$(git rev-parse --short HEAD)
@@ -120,7 +120,7 @@ jobs:
       # Create a GitHub Release (only once)
       - name: Create Release
         id: create_release
-        if: github.ref == 'refs/heads/main' && matrix.os == 'ubuntu-latest'
+        if: github.ref == 'refs/heads/main'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -131,12 +131,12 @@ jobs:
           prerelease: false
 
       # Download artifacts and upload to release
-      - name: Download artifacts
+      - name: Download artifacts for libaribb25
         uses: actions/download-artifact@v2
         with:
           name: libaribb25_${{ matrix.os }}
       - name: Upload release asset for libaribb25
-        if: github.ref == 'refs/heads/main' && matrix.os == 'ubuntu-latest'
+        if: github.ref == 'refs/heads/main'
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -144,4 +144,21 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./libaribb25_${{ matrix.os }}.tar.gz
           asset_name: libaribb25_${{ matrix.os }}.tar.gz
+          asset_content_type: application/gzip
+
+      # Download artifacts and upload to release
+      - name: Download artifacts for recdvb
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/download-artifact@v2
+        with:
+          name: recdvb_${{ matrix.os }}
+      - name: Upload release asset for recdvb
+        if: github.ref == 'refs/heads/main' && matrix.os == 'ubuntu-latest'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./recdvb_${{ matrix.os }}.tar.gz
+          asset_name: recdvb_${{ matrix.os }}.tar.gz
           asset_content_type: application/gzip
