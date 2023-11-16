@@ -106,49 +106,42 @@ jobs:
           name: libaribb25_macos
           path: libaribb25_macos.tar.gz
 
-      # Generate and push a new tag
+      # Generate and push a new tag (only once)
       - name: Generate tag
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && matrix.os == 'ubuntu-latest'
         run: |
           TAG_DATE=$(date +'%Y%m%d')
           SHORT_SHA=$(git rev-parse --short HEAD)
-          TAG_NAME="v${TAG_DATE}-${SHORT_SHA}-${{ matrix.os }}"
+          TAG_NAME="v${TAG_DATE}-${SHORT_SHA}"
           echo "TAG_NAME=${TAG_NAME}" >> $GITHUB_ENV
           git tag $TAG_NAME
           git push origin $TAG_NAME
 
-      # Create a GitHub Release
+      # Create a GitHub Release (only once)
       - name: Create Release
         id: create_release
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && matrix.os == 'ubuntu-latest'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ env.TAG_NAME }}
-          release_name: Release ${{ env.TAG_NAME }} for ${{ matrix.os }}
+          release_name: Release ${{ env.TAG_NAME }}
           draft: false
           prerelease: false
 
-      # Upload release asset
-      - name: Upload release asset
-        if: matrix.os == 'ubuntu-latest'
+      # Download artifacts and upload to release
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: libaribb25_${{ matrix.os }}
+      - name: Upload release asset for libaribb25
+        if: github.ref == 'refs/heads/main' && matrix.os == 'ubuntu-latest'
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./libaribb25_ubuntu.tar.gz
-          asset_name: libaribb25_ubuntu.tar.gz
-          asset_content_type: application/gzip
-
-      - name: Upload release asset
-        if: matrix.os == 'macos-latest'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./libaribb25_macos.tar.gz
-          asset_name: libaribb25_macos.tar.gz
+          asset_path: ./libaribb25_${{ matrix.os }}.tar.gz
+          asset_name: libaribb25_${{ matrix.os }}.tar.gz
           asset_content_type: application/gzip
