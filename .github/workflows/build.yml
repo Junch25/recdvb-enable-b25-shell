@@ -38,7 +38,7 @@ jobs:
           cd lib/libaribb25
           cmake -B build && cd build
           make && sudo make install
-          mkdir -p ${{ github.workspace }}/libaribb25_${{ matrix.os }}
+          mkdir -p $WORKDIR/libaribb25_${{ matrix.os }}
           cp arib-b1-stream-test arib-b25-stream-test b1 b25 $WORKDIR/libaribb25_${{ matrix.os }}
           echo "done!"
 
@@ -51,7 +51,7 @@ jobs:
           ./autogen.sh
           ./configure --enable-b25
           make && sudo make install
-          mkdir -p ${{ github.workspace }}/recdvb_${{ matrix.os }}
+          mkdir -p $WORKDIR/recdvb_${{ matrix.os }}
           cp recdvb recpt1ctl chkdvbsignal tssplitter_lite $WORKDIR/recdvb_${{ matrix.os }}
           echo "done!"
 
@@ -62,7 +62,7 @@ jobs:
           cd lib/libaribb25
           cmake -B build && cd build
           make
-          mkdir -p ${{ github.workspace }}/libaribb25_${{ matrix.os }}
+          mkdir -p $WORKDIR/libaribb25_${{ matrix.os }}
           cp arib-b1-stream-test arib-b25-stream-test b1 b25 $WORKDIR/libaribb25_${{ matrix.os }}
           echo "done!"
 
