@@ -98,7 +98,7 @@ jobs:
       - name: Archive libaribb25 (macOS)
         if: matrix.os == 'macos-latest'
         run: |
-          tar -czvf libaribb25_${{ matrix.os }}.tar.gz $WORKDIR/bin_macos/libaribb25/
+          tar -czvf libaribb25_${{ matrix.os }}.tar.gz $WORKDIR/libaribb25_${{ matrix.os }}
       - name: Upload libaribb25 Artifact (macOS)
         if: matrix.os == 'macos-latest'
         uses: actions/upload-artifact@v3
