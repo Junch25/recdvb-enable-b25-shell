@@ -120,7 +120,7 @@ jobs:
       # Create a GitHub Release (only once)
       - name: Create Release
         id: create_release
-        if: github.ref == 'refs/heads/main' && matrix.os == 'ubuntu-latest'
+        if: github.ref == 'refs/heads/main'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -131,7 +131,7 @@ jobs:
           prerelease: false
 
       # Download artifacts and upload to release
-      - name: Download artifacts
+      - name: Download artifacts for libaribb25
         uses: actions/download-artifact@v2
         with:
           name: libaribb25_${{ matrix.os }}
@@ -144,4 +144,20 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./libaribb25_${{ matrix.os }}.tar.gz
           asset_name: libaribb25_${{ matrix.os }}.tar.gz
+          asset_content_type: application/gzip
+
+      # Download artifacts and upload to release
+      - name: Download artifacts for recdvb
+        uses: actions/download-artifact@v2
+        with:
+          name: recdvb_${{ matrix.os }}
+      - name: Upload release asset for recdvb
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./recdvb_${{ matrix.os }}.tar.gz
+          asset_name: recdvb_${{ matrix.os }}.tar.gz
           asset_content_type: application/gzip
