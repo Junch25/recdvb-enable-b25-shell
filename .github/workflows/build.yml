@@ -39,7 +39,7 @@ jobs:
           cmake -B build && cd build
           make && sudo make install
           mkdir -p ${{ github.workspace }}/libaribb25_${{ matrix.os }}
-          cp arib-b1-stream-test arib-b25-stream-test b1 b25 ${{ github.workspace }}/libaribb25_${{ matrix.os }}
+          cp arib-b1-stream-test arib-b25-stream-test b1 b25 $WORKDIR/libaribb25_${{ matrix.os }}
           echo "done!"
 
       # [Ubuntu] Build recdvb
@@ -52,7 +52,7 @@ jobs:
           ./configure --enable-b25
           make && sudo make install
           mkdir -p ${{ github.workspace }}/recdvb_${{ matrix.os }}
-          cp recdvb recpt1ctl chkdvbsignal tssplitter_lite ${{ github.workspace }}/recdvb_${{ matrix.os }}
+          cp recdvb recpt1ctl chkdvbsignal tssplitter_lite $WORKDIR/recdvb_${{ matrix.os }}
           echo "done!"
 
       # [macOS] Build libaribb25
@@ -63,13 +63,13 @@ jobs:
           cmake -B build && cd build
           make
           mkdir -p ${{ github.workspace }}/libaribb25_${{ matrix.os }}
-          cp arib-b1-stream-test arib-b25-stream-test b1 b25 ${{ github.workspace }}/libaribb25_${{ matrix.os }}
+          cp arib-b1-stream-test arib-b25-stream-test b1 b25 $WORKDIR/libaribb25_${{ matrix.os }}
           echo "done!"
 
       # [Ubuntu and macOS] Archive and upload libaribb25
       - name: Archive libaribb25
         run: |
-          tar -czvf libaribb25_${{ matrix.os }}.tar.gz ${{ github.workspace }}/libaribb25_${{ matrix.os }}
+          tar -czvf libaribb25_${{ matrix.os }}.tar.gz $WORKDIR/libaribb25_${{ matrix.os }}
       - name: Upload libaribb25 Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -79,7 +79,7 @@ jobs:
       # [Ubuntu and macOS] Archive and upload recdvb
       - name: Archive recdvb
         run: |
-          tar -czvf recdvb_${{ matrix.os }}.tar.gz ${{ github.workspace }}/recdvb_${{ matrix.os }}
+          tar -czvf recdvb_${{ matrix.os }}.tar.gz $WORKDIR/recdvb_${{ matrix.os }}
       - name: Upload recdvb Artifact
         uses: actions/upload-artifact@v3
         with:
