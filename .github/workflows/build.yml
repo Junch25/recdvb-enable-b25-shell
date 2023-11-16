@@ -42,8 +42,8 @@ jobs:
           cd lib/libaribb25
           cmake -B build && cd build
           make && sudo make install
-          mkdir -p $WORKDIR/bin_ubuntu/libaribb25
-          cp arib-b1-stream-test arib-b25-stream-test b1 b25 $WORKDIR/bin_ubuntu/libaribb25/
+          mkdir -p $WORKDIR/libaribb25_${{ matrix.os }}
+          cp arib-b1-stream-test arib-b25-stream-test b1 b25 $WORKDIR/libaribb25_${{ matrix.os }}
           echo "done!"
 
       # [Ubuntu] Build recdvb
@@ -55,8 +55,8 @@ jobs:
           ./autogen.sh
           ./configure --enable-b25
           make && sudo make install
-          mkdir -p $WORKDIR/bin_ubuntu/recdvb
-          cp recdvb recpt1ctl chkdvbsignal tssplitter_lite $WORKDIR/bin_ubuntu/recdvb
+          mkdir -p $WORKDIR/recdvb_${{ matrix.os }}
+          cp recdvb recpt1ctl chkdvbsignal tssplitter_lite $WORKDIR/recdvb_${{ matrix.os }}
           echo "done!"
 
       # [macOS] Build libaribb25
@@ -66,33 +66,33 @@ jobs:
           cd lib/libaribb25
           cmake -B build && cd build
           make
-          mkdir -p $WORKDIR/bin_macos/libaribb25
-          cp arib-b1-stream-test arib-b25-stream-test b1 b25 $WORKDIR/bin_macos/libaribb25/
+          mkdir -p $WORKDIR/libaribb25_${{ matrix.os }}
+          cp arib-b1-stream-test arib-b25-stream-test b1 b25 $WORKDIR/libaribb25_${{ matrix.os }}
           echo "done!"
 
       # [Ubuntu] Archive and upload libaribb25
       - name: Archive libaribb25 (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         run: |
-          tar -czvf libaribb25_ubuntu.tar.gz $WORKDIR/bin_ubuntu/libaribb25/
+          tar -czvf libaribb25_${{ matrix.os }}.tar.gz $WORKDIR/libaribb25_${{ matrix.os }}
       - name: Upload libaribb25 Artifact (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v3
         with:
-          name: libaribb25_ubuntu
-          path: libaribb25_ubuntu.tar.gz
+          name: libaribb25_${{ matrix.os }}
+          path: libaribb25_${{ matrix.os }}.tar.gz
 
       # [Ubuntu] Archive and upload recdvb
       - name: Archive recdvb (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         run: |
-          tar -czvf recdvb_ubuntu.tar.gz $WORKDIR/bin_ubuntu/recdvb/
+          tar -czvf recdvb_ubuntu.tar.gz $WORKDIR/recdvb_${{ matrix.os }}
       - name: Upload recdvb Artifact (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v3
         with:
-          name: recdvb_ubuntu
-          path: recdvb_ubuntu.tar.gz
+          name: recdvb_${{ matrix.os }}
+          path: recdvb_${{ matrix.os }}.tar.gz
 
       # [macOS] Archive and upload libaribb25
       - name: Archive libaribb25 (macOS)
