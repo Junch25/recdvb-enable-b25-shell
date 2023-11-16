@@ -35,8 +35,8 @@ jobs:
         run: |
           brew install cmake gcc make autoconf automake pkg-config pcsc-lite
 
-      # [Ubuntu] Build libarib25
-      - name: Build libarib25 (Ubuntu)
+      # [Ubuntu] Build libaribb25
+      - name: Build libaribb25 (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         run: |
           cd lib/libaribb25
@@ -59,8 +59,8 @@ jobs:
           cp recdvb recpt1ctl chkdvbsignal tssplitter_lite $WORKDIR/bin_ubuntu/recdvb
           echo "done!"
 
-      # [macOS] Build libarib25
-      - name: Build libarib25 (macOS)
+      # [macOS] Build libaribb25
+      - name: Build libaribb25 (macOS)
         if: matrix.os == 'macos-latest'
         run: |
           cd lib/libaribb25
