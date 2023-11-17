@@ -1,7 +1,8 @@
 # recdvb-enable-b25-shell
 recdvb cmd --enable-b25 shellscript  
 
-![workflow](https://github.com/Junch25/recdvb-enable-b25-shell/actions/workflows/.github/workflows/build.yml/badge.svg)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/Junch25/recdvb-enable-b25-shell/.github%2Fworkflows%2Fbuild.yml?style=for-the-badge&label=Docker%20image%20publish)　
+
 
 | source     | URL                                       | 
 | ---------- | ----------------------------------------- | 
